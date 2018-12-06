@@ -23,7 +23,7 @@ with open(csvpath, 'r') as csvfile:
         totalPL += int(row[1])
 
     # average change is the rolling average on month over month changes
-        averagechange = 10
+        averagechange = totalmonths/totalPL
 
     # greatest increase found as largest one month gain
         greatestincrease = 20
@@ -35,6 +35,6 @@ print("Financial Analysis")
 print("----------------------------------")
 print("Total Months: " + str(totalmonths))
 print("Total P/L: " + str(totalPL))   
-print(f"Average Change: {str(averagechange)}")
-print(f"Greatest Increase in Profits: {str(greatestincrease)}")
-print(f"Greatest Decrease in Profits: {str(greatestdecrease)}")
+print("Average Change: " (str(averagechange)
+#print("Greatest Increase in Profits:" (greatestincrease)
+#print("Greatest Decrease in Profits:" (greatestdecrease)
