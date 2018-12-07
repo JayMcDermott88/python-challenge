@@ -18,6 +18,9 @@ with open(csvpath, 'r') as csvfile:
                 "Li", 
                 "O'Tooley"]
 
+    def votes(resuts)
+
+
     for row in csvreader:
 
         #The total number of votes cast
@@ -56,3 +59,5 @@ print(f"Li: " (str(totalli) , str(totalli_percent))
 print(f"(O'Tooley: " (str(totalotooley) , str(totalotooley_percent))
 print("----------------------------------"
 print("Winner: " winner)
+
+
