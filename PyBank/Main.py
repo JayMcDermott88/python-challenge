@@ -12,8 +12,15 @@ with open(csvpath, 'r') as csvfile:
     # Split the data on commas
     csvreader = csv.reader(csvfile, delimiter=',')
     header = next(csvreader)
+    print(header)
+
+
 
     for row in csvreader:
+
+        #firstrow= next(header)
+        #current_row = 
+        #previous row = 
 
 # define functions for data
 #total months is the numerical counts on months in time period       
@@ -23,7 +30,7 @@ with open(csvpath, 'r') as csvfile:
         totalPL += int(row[1])
 
     # average change is the rolling average on month over month changes
-        averagechange = totalmonths/totalPL
+        averagechange = float(totalmonths/totalPL)
 
     # greatest increase found as largest one month gain
         greatestincrease = 20
@@ -35,6 +42,7 @@ print("Financial Analysis")
 print("----------------------------------")
 print("Total Months: " + str(totalmonths))
 print("Total P/L: " + str(totalPL))   
-print("Average Change: " (str(averagechange)
-#print("Greatest Increase in Profits:" (greatestincrease)
-#print("Greatest Decrease in Profits:" (greatestdecrease)
+print("Average Change: " + str(averagechange))
+print("Greatest Increase in Profits: " + str(greatestincrease))
+print("Greatest Decrease in Profits: " + str(greatestdecrease))
+
