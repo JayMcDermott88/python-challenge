@@ -1,48 +1,70 @@
+# Dependencies
 import csv
+import os
 
-# Path to connect data
-csvpath = "/Users/jaybaybay/python-challenge/PyBank/budget_data.csv"
+# Files to load and output (Remember to change these)
+file_to_load = os.path.join("Resources", "budget_data.csv")
+file_to_output = os.path.join("analysis", "budget_analysis.txt")
 
-totalmonths=0
-totalPL=0
+# Track various financial parameters
+total_months = 0
+month_of_change = []
+net_change_list = []
+greatest_increase = ["", 0]
+greatest_decrease = ["", 9999999999999999999]
+total_net = 0
 
-# read in CSV file
-with open(csvpath, 'r') as csvfile:
+# Read the csv and convert it into a list of dictionaries
+with open(file_to_load) as financial_data:
+    reader = csv.reader(financial_data)
 
-    # Split the data on commas
-    csvreader = csv.reader(csvfile, delimiter=',')
-    header = next(csvreader)
-    print(header)
+    # Read the header row
+    header = next(reader)
 
+    # Extract first row to avoid appending to net_change_list
+    first_row = next(reader)
+    total_months = total_months + 1
+    total_net = total_net + int(first_row[1])
+    prev_net = int(first_row[1])
 
+    for row in reader:
 
-    for row in csvreader:
+        # Track the total
+        total_months = total_months + 1
+        total_net = total_net + int(row[1])
 
-        #firstrow= next(header)
-        #current_row = 
-        #previous row = 
+        # Track the net change
+        net_change = int(row[1]) - prev_net
+        prev_net = int(row[1])
+        net_change_list = net_change_list + [net_change]
+        month_of_change = month_of_change + [row[0]]
 
-# define functions for data
-#total months is the numerical counts on months in time period       
-        totalmonths = totalmonths+1
+        # Calculate the greatest increase
+        if net_change > greatest_increase[1]:
+            greatest_increase[0] = row[0]
+            greatest_increase[1] = net_change
 
-# total P/L found as sum of stated Profit/Loss
-        totalPL += int(row[1])
+        # Calculate the greatest decrease
+        if net_change < greatest_decrease[1]:
+            greatest_decrease[0] = row[0]
+            greatest_decrease[1] = net_change
 
-    # average change is the rolling average on month over month changes
-        averagechange = float(totalmonths/totalPL)
+# Calculate the Average Net Change
+net_monthly_avg = sum(net_change_list) / len(net_change_list)
 
-    # greatest increase found as largest one month gain
-        greatestincrease = 20
+# Generate Output Summary
+output = (
+    f"\nFinancial Analysis\n"
+    f"----------------------------\n"
+    f"Total Months: {total_months}\n"
+    f"Total: ${total_net}\n"
+    f"Average  Change: ${net_monthly_avg:.2f}\n"
+    f"Greatest Increase in Profits: {greatest_increase[0]} (${greatest_increase[1]})\n"
+    f"Greatest Decrease in Profits: {greatest_decrease[0]} (${greatest_decrease[1]})\n")
 
-    # greatest decrease found as largest one month loss
-        greatestdecrease = 30
+# Print the output (to terminal)
+print(output)
 
-print("Financial Analysis")
-print("----------------------------------")
-print("Total Months: " + str(totalmonths))
-print("Total P/L: " + str(totalPL))   
-print("Average Change: " + str(averagechange))
-print("Greatest Increase in Profits: " + str(greatestincrease))
-print("Greatest Decrease in Profits: " + str(greatestdecrease))
-
+# Export the results to text file
+with open(file_to_output, "w") as txt_file:
+    txt_file.write(output)
